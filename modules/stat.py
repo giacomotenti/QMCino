@@ -21,6 +21,8 @@ def dmc_stat(bin_dim,bin0,pmax,filename):
     with open('dmc_en.dat','w') as out:
         for i in range(pmax):
             out.write('{}\t{}\t{}\t{}\t{}\n'.format(i+1,E[i],sE[i],x[i],sx[i]))
+    print('Energy = {} +/- {}'.format(E[-1],sE[-1]))
+    print('Position = {} +/- {}'.format(x[-1],sx[-1]))
     tfin = time.time()
     print('Total time = {} s'.format(tfin - t0))
     f.close()
@@ -47,6 +49,8 @@ def stat_calc(data_array,bin_dim,bin0,p):
                 if count % bin_dim == 0 and count != bin0*bin_dim:
                     E += Ebin
                     E2 += Ebin**2 / Gpbin
+                    x += xbin
+                    x2 += xbin**2 / Gpbin
                     Gtot += Gpbin
                     G2tot += Gpbin**2
                     Ebin = np.zeros(p)
