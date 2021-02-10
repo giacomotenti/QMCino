@@ -2,6 +2,7 @@ import os
 import numpy as np
 from modules import wavefun as wf
 from modules import dmc_sw
+from modules import stat
 from modules import dmc_mw
 
 #GLOBAL VARIABLES
@@ -110,11 +111,12 @@ def main():
                 print('Bad option!')
         elif inp == 'read_dmc':
             if os.path.exists('./dmc.dat'):
+                filename = 'dmc.dat'
                 print('Data read from ./dmc.dat')
                 bindim = int(input('Bin dimension: ').strip(' '))
                 bin0 = int(input('Initial bin for averages: ').strip(' '))
                 p = int(input('Projection length: ').strip(' '))
-                dmc_sw.dmc_stat(bindim,bin0,p)
+                stat.dmc_stat(bindim,bin0,p,filename)
             else:
                 print('dmc.dat does not exist')
         else:
