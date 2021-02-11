@@ -8,6 +8,8 @@ def dmc_stat(bin_dim,bin0,pmax,filename):
     data = f.readlines()
     d = []
     for line in data:
+        if line.partition('#')[0] == '':
+            continue
         dlist = [float(x.strip('\n')) for x in line.split('\t')]
         d.append(dlist)
     data_array = np.array(d)

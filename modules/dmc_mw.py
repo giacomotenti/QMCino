@@ -43,7 +43,7 @@ def run_mw(alpha,t,t2,V,L,which,nbra,nit,nw,parallel):
     xxx = np.ones(nw)
     wwalker = np.ones(nw)
     el = np.zeros(nw)
-    f = open('dmc_branch.data', 'w')
+    f = open('dmc_branch.dat', 'w')
     f.write('# mean_posi \t mean_energy \t mean_weight \n' )
     if (parallel):
         npool = mp.cpu_count()

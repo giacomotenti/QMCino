@@ -143,15 +143,15 @@ def main(args):
                 else:
                     print('Bad option!')
             elif inp == 'read_dmc':
-                if os.path.exists('./dmc.dat'):
-                    filename = 'dmc.dat'
-                    print('Data read from ./dmc.dat')
+                filename = input('File name? ').strip(' ')
+                if os.path.exists(filename):
+                    print('Data read from ./' + filename)
                     bindim = int(input('Bin dimension: ').strip(' '))
                     bin0 = int(input('Initial bin for averages: ').strip(' '))
                     p = int(input('Projection length: ').strip(' '))
                     stat.dmc_stat(bindim,bin0,p,filename)
                 else:
-                    print('dmc.dat does not exist')
+                    print(filename + ' does not exist')
             else:
                 print(inp + ' command not found')
                 print(explain_commands)
