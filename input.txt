@@ -5,7 +5,6 @@ V = 5			# on site potential (default = 5)
 which= 1   		# type of wf (0 or 1 at the moment.. default 1)
 alpha = 1.68		# variational parameter (default 1)
 calc = dmc		# type of calculation
-opt = serial 		# serial or parallel (default parallel)
 nsteps = 1000000        # number of steps or branching (if manywalker) .. default 100000
 #nbra = 10		# iterations between two branchings
 nw = 1  		# number of walkers

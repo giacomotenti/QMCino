@@ -1,9 +1,10 @@
 import numpy as np
-import multiprocessing as mp
+from numba import jit, njit ,prange
 import time
 from modules.update import update
 import random as rand
 
+@jit(nopython=True)
 def E_dmc_mod(alpha,t,t2,V,L,which,n_it,x0):
     x = x0
     bx , elx , P_left , P_right = update(x,alpha,t,t2,V,L,which)
@@ -22,8 +23,8 @@ def E_dmc_mod(alpha,t,t2,V,L,which,n_it,x0):
         w *= b_old
     return x, w, elx
 
-def branching(x_w, w_w):
-    nw = np.size(x_w)
+@jit(nopython=True)
+def branching(x_w, w_w, nw):
     # branching!
     y = np.random.rand()
     prob = (w_w / np.sum(w_w))
@@ -38,38 +39,27 @@ def branching(x_w, w_w):
         x_out[i] = x_w[j]
     return x_out
 
-def run_mw(alpha,t,t2,V,L,which,nbra,nit,nw,parallel):
+@njit(parallel=True)
+def propagate(alpha,t,t2,V,L,which,nbra,nit,nw,xxx,wwalker):
+    el = np.zeros(nw)
+    wwalker = np.zeros(nw)
+    for w in prange(nw):
+        xxx[w], wwalker[w], el[w] = E_dmc_mod(alpha, t, t2, V, L,which, nbra, xxx[w])
+    weight = np.mean(wwalker)
+    energy = np.sum(el * wwalker)/np.sum(wwalker)
+    pos = np.sum(xxx * wwalker)/np.sum(wwalker)
+    xxx_out = branching(xxx, wwalker, nw)
+    return xxx_out , pos , energy , weight
+
+def run_mw(alpha,t,t2,V,L,which,nbra,nit,nw):
     t0 = time.time()
     xxx = np.ones(nw)
     wwalker = np.ones(nw)
-    el = np.zeros(nw)
     f = open('dmc_branch.dat', 'w')
     f.write('# mean_posi \t mean_energy \t mean_weight \n' )
-    if (parallel):
-        npool = mp.cpu_count()
-        print('running parallel mode')
-        print('parallelize on {} cores'.format(npool))
-    else:
-        print('running serial mode')
+    print('running parallel mode')
     for ij in range(nit):
-        if (parallel):
-            pool = mp.Pool(npool)
-            res = []
-            for w in range(nw):
-                res.append(pool.apply_async(E_dmc_mod, args=(alpha, t, t2, V, L,which, nbra, xxx[w])))
-            pool.close()
-            pool.join()
-            w = 0
-            for i in res:
-                xxx[w], wwalker[w], el[w] = i.get()
-                w += 1
-        else:
-            for w in range(nw):
-                xxx[w], wwalker[w], el[w] = E_dmc_mod(alpha, t, t2, V, L,which, nbra, xxx[w])
-        weight = np.mean(wwalker)
-        energy = np.sum(el * wwalker)/np.sum(wwalker)
-        pos = np.sum(xxx * wwalker)/np.sum(wwalker)
-        xxx = branching(xxx, wwalker)
+        xxx , pos , energy ,weight = propagate(alpha,t,t2,V,L,which,nbra,nit,nw,xxx,wwalker)
         f.write('{:.16f} \t {:.16f} \t {} \n'.format(pos, energy, weight))
         if 10*(ij+1) % nit == 0:
             print('{}% completed'.format(100*(ij+ 1)//nit))

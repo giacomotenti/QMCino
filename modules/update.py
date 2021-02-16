@@ -1,5 +1,7 @@
+from numba import jit
 from modules.wavefun import psi
 
+@jit(nopython=True)
 def update(x,alpha,t,t2,V,L,which):
     Lambda = V * L
     psix = psi(x,alpha,L,which)
@@ -13,3 +15,4 @@ def update(x,alpha,t,t2,V,L,which):
     P_left = t * psi_l / psix / bx
     P_right = t * psi_r /psix / bx
     return bx / Lambda , elx , P_left , P_right
+

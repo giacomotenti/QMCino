@@ -54,7 +54,6 @@ def readinput(file):
     inp['alpha'] = alpha
     inp['which'] = which
     inp['calc'] = 'dmc'
-    inp['opt'] = 'parallel'
     inp['nsteps'] = 100000
     inp['nbra'] = 10
     inp['nw'] = 100
@@ -132,14 +131,7 @@ def main(args):
                     nit = int(input('Number of branchings? ').strip(' '))
                     nbra = int(input('nbra? ').strip(' '))
                     nw = int(input('# of walkers? ').strip(' '))
-                    par_run = input('Run in parallel?(yes/no)').strip(' ')
-                    if par_run == 'yes' or par_run == 'y':
-                        parallel = True
-                    elif par_run == 'no' or par_run == 'n':
-                        parallel = False
-                    else:
-                        print('Bad option!')
-                    dmc_mw.run_mw(alpha,t,t2,V,L,which,nbra,nit,nw,parallel)
+                    dmc_mw.run_mw(alpha,t,t2,V,L,which,nbra,nit,nw)
                 else:
                     print('Bad option!')
             elif inp == 'read_dmc':
@@ -175,6 +167,7 @@ def main(args):
                 print('Not a supported option!')
         else:
             print('Error:  ' + args.input + ' does not exist')
+
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument('--input' , type = str , help = 'input file',default = 'null')
