@@ -29,10 +29,10 @@ def branching(x_w, w_w, nw):
     y = np.random.rand()
     prob = (w_w / np.sum(w_w))
     x_out= np.empty(nw)
+    j = 0
+    prob_sum = prob[0]
     for i in range(nw):
         z = (i + y) / nw
-        j = 0
-        prob_sum = prob[0]
         while z > prob_sum:
             j += 1
             prob_sum += prob[j]

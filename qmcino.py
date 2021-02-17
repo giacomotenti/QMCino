@@ -13,7 +13,7 @@ t2 = 0
 V = 5
 L = 30
 alpha = 1.0
-which = 1
+which = 0
 
 def change():
     print('Set new parameters for the Hamiltonian:')
@@ -145,7 +145,7 @@ def main(args):
                 else:
                     print(filename + ' does not exist')
             else:
-                print(inp + ' command not found')
+                print(inp + ' command not found or not implemented yet.. Sorry!')
                 print(explain_commands)
     else:
         if os.path.exists(args.input):
