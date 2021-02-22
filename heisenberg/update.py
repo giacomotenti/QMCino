@@ -1,16 +1,15 @@
-#from numba import jit
+from numba import jit
 #from numba import boolean
 import numpy as np
 #from heisenberg.wavefun import psi
 
 
-#@jit(nopython=True)
-def computetab(conf,L):
+@jit(nopython=True)
+def computetab(tab,conf,L):
     Lambda = L / 4.0
     e0 = L* (np.log(2.0) - 0.25)
     diag = 0
     el = 0
-    tab=np.empty(L,bool)
     for i in range(L):
         j = np.mod(i+1, L)
         if conf[i]!= conf[j]:
@@ -23,7 +22,7 @@ def computetab(conf,L):
     el+=diag
     bx=Lambda-el
     return bx/e0 , tab, el
-#@jit(nopython=True)
+@jit(nopython=True)
 def update(conf,tab,iout,el):
     L=conf.shape[0]
     Lambda=L/4.0
@@ -55,13 +54,17 @@ def update(conf,tab,iout,el):
 #example
 #
 #L=4
+#tab=np.empty(L,dtype=bool)
+#
 #conf=[np.mod(i,2)==0 for i in range(L)]
 #conf=np.array(conf,dtype=bool)
 #print("stato=",conf)
-#bx,tab,el=computetab(conf,L)
+#bx,tab,el=computetab(tab,conf,L)
 #print("tab iniziale=",tab)
 #print("energia locale= ",el)
-#iout=1
-#conf[iout]=np.invert(conf[iout])
+#iout=0
+#conf[0]=np.invert(conf[0])
+#conf[1]=np.invert(conf[1])
+#
 #print("configurazione post",conf)
 #print(update(conf,tab,iout,el))
