@@ -38,14 +38,15 @@ def update(conf,tab,iout,el):
         diag = diag + 0.5
         tab[iback] =False # no move is possible
         el+=1
-    ifor=np.mod(iout+1,L)
-    if conf[ifor]!= conf[iout]:
-        tab[iout] =True
+    jout=np.mod(iout+1,L)
+    ifor=np.mod(jout+1,L)
+    if conf[ifor]!= conf[jout]:
+        tab[jout] =True
         el = el - 1
         diag = diag - 0.5
     else:
         diag = diag + 0.5
-        tab[iout] =False # no move is possible
+        tab[jout] =False # no move is possible
         el+=1
     el+=diag
     bx=Lambda-el
