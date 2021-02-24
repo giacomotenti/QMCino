@@ -1,27 +1,27 @@
-from numba import jit
-#from numba import boolean
 import numpy as np
-#from heisenberg.wavefun import psi
+from numba import jit ,njit
 
 
-@jit(nopython=True)
+@njit(parallel=True)
 def computetab(tab,conf,L):
     Lambda = L / 4.0
+    #lambda - ground state energy (see Bethe ansatz)
     e0 = Lambda+L* (np.log(2.0) - 0.25)
     diag = 0
     el = 0
-    for i in range(L):
+    for i in prange(L):
         j = np.mod(i+1, L)
         if conf[i]!= conf[j]:
             tab[i] =True
-            el = el - 0.5#i segni sono giusti?
+            el = el - 0.5
             diag = diag - 0.25
         else:
             diag = diag + 0.25
             tab[i] =False # no move is possible
     el+=diag
     bx=Lambda-el
-    return bx/e0 , tab, el,diag
+    return bx/e0, tab, el, diag
+
 @jit(nopython=True)
 def update(conf,tab,iout,el,diag):
     L=conf.shape[0]
@@ -52,19 +52,19 @@ def update(conf,tab,iout,el,diag):
     return   tab, el,diag
 
 #example
-L=4
-tab=np.empty(L,dtype=bool)
-
-conf=[np.mod(i,2)==0 for i in range(L)]
-conf=np.array(conf,dtype=bool)
-print("stato=",conf)
-bx,tab,el,diag=computetab(tab,conf,L)
-print("diag",diag)
-print("tab iniziale=",tab)
-print("energia locale= ",el)
-iout=0
-conf[0]=np.invert(conf[0])
-conf[1]=np.invert(conf[1])
-
-print("configurazione post",conf)
-print("tab, el e diag= ",update(conf,tab,iout,el,diag))
+#L=4
+#tab=np.empty(L,dtype=bool)
+#
+#conf=[np.mod(i,2)==0 for i in range(L)]
+#conf=np.array(conf,dtype=bool)
+#print("stato=",conf)
+#bx,tab,el,diag=computetab(tab,conf,L)
+#print("diag",diag)
+#print("tab iniziale=",tab)
+#print("energia locale= ",el)
+#iout=0
+#conf[0]=np.invert(conf[0])
+#conf[1]=np.invert(conf[1])
+#
+#print("configurazione post",conf)
+#print("tab, el e diag= ",update(conf,tab,iout,el,diag))

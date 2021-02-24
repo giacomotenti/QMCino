@@ -85,6 +85,7 @@ def main(args):
         print(logo)
         print('')
         explain_commands = 'Type: \n \
+        -heis: switch to 1d Heisenberg model; \n \
         -echo_param: show parameters of the Hamiltonian; \n \
         -set_param: set the parameters of the Hamiltonian; \n \
         -set_fun: change the guiding/variational function \n \
