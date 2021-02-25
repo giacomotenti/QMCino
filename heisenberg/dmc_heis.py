@@ -1,14 +1,60 @@
-from numba import jit
-from numba import prange
 import numpy as np
-import random
+import time
+from numba import jit, njit , prange
+from heisenberg.update import update, computetab
 
-@jit(nopython=True)
-def dmc_heis(conf,tab,el,diag,bx,nit):
-    for i in range(int(nit)):
-        for w in range(nw):
-            W[w]*=bx[w]
-            r=random.random()
+#main loop
+def run_dmc_heis(L,nit,nbra,nw):
+    t0 = time.time()
+    print('DMC algorithm on a {} site 1d Heisenberg model'.format(L))
+    print('Starting calculation with {} walkers'.format(nw))
+    print('Branching each {} steps.'.format(nbra))
+    surv_sum = 0
+    f = open('dmc_heis.dat','w')
+
+    #initialization:
+    conf_0 = np.empty(L,dtype='bool')
+    for site in range(L):
+        if site % 2 == 0:
+            conf_0[site] = True
+        else:
+            conf_0[site] = False
+    conf = np.tile(conf_0,(nw,1))
+    tab_0 = np.empty(L,dtype='bool')
+    tab_0 , bx_0 , el_0 , diag_0 = computetab(tab_0,conf_0,L)
+    tab = np.tile(tab_0,(nw,1))
+    bx = bx_0*np.ones(nw)
+    el = el_0*np.ones(nw)
+    diag = diag_0*np.ones(nw)
+    #end initialization
+
+    #loop on the number of branchings
+    for istep in range(nit):
+        conf , tab,  weight , energy, el, diag, bx, surv = dmc_heis(L,nw,conf,tab,bx,el,diag,nbra)
+        surv_sum += surv
+        f.write('{:.16f} \t {:.16f} \t {} \n'.format(istep, energy, weight))
+        if 10*(istep+1) % nit == 0:
+            print('{}% completed'.format(100*(istep+ 1)//nit))
+    f.close()
+    print('Data written in dmc_heis.dat')
+    surv_sum = surv_sum / (nw * nit)
+    print('Average survived walkers after branching = {:.5f}'.format(surv_sum))
+    t1 = time.time()
+    print('Elapsed time = {} s'.format(t1-t0))
+
+
+@njit(parallel=True)
+def dmc_heis(L,nw,conf,tab,bx,el,diag,nsteps):
+#accumulated weight initialized to one
+    wconf = np.ones(nw)
+    Lambda = L / 4.0
+#parallelized loop on walkers
+    for w in prange(nw):
+        for i in range(nsteps):
+            #accumulate the weight
+            wconf*=bx[w]
+            #random move
+            r=np.random.rand()
             gn=np.zeros(L+1)
             gn[0]=Lambda-diag[w]
             for j in range(L):
@@ -23,12 +69,18 @@ def dmc_heis(conf,tab,el,diag,bx,nit):
                     print('molto male')
                     break
             jout=np.mod(iout+1, L)
-            if iout!=-1:conf[w,iout]=not(conf[w,iout])
-            if iout!=-1:conf[w,jout]=not(conf[w,jout])
-            tab[w], el[w], diag[w]=update(conf[w],tab[w],iout,el[w],diag[w])
-            bx[w]=(Lambda-el[w])/(L* (np.log(2.0) - 0.25))
-    return conf
-<<<<<<< HEAD
+            #non diag move if iout != -1
+            if iout!=-1:
+                conf[w,iout]=not(conf[w,iout])
+                conf[w,jout]=not(conf[w,jout])
+                tab[w], bx[w] , el[w], diag[w] = update(conf[w],tab[w],iout,el[w],diag[w])
+    #energy weighted average before branching
+    energy = np.sum(el*wconf)/np.sum(wconf)
+    #here we call the branching
+    nrand = np.random.rand()
+    jbra,weight, surv = branching(nw,wconf,nrand)
+    conf, tab, diag, bx, el = reshuff(nw, jbra, conf, tab, diag, bx, el)
+    return conf, tab,  weight , energy , el, diag, bx, surv
 
 @jit(nopython=True)
 def branching(nw,wconf,nrand):
@@ -65,8 +117,7 @@ def branching(nw,wconf,nrand):
  #       print("Error")
     #I add this part so that branching subroutine does all the dirty work
     jbra = upjbra(nw,jbra,histw)
-    iconf, tab, diag , bx, el = reshuff(nw,jbra,iconf,tab,diag,bx,el)
-    return iconf,tab, diag, bx , el,weight, surv
+    return jbra,weight, surv
 
 @jit(nopython=True)
 def upjbra(nw,jbra,histw): #here I permute the walkers in a way that I can use reshuffle in a cheap way
@@ -91,15 +142,13 @@ def upjbra(nw,jbra,histw): #here I permute the walkers in a way that I can use r
     return jbra
 
 @jit(nopython=True)
-def reshuff(nw,jbra,iconf,tab,diag,bx,el):
+def reshuff(nw,jbra,conf,tab,diag,bx,el):
     for i in range(nw):
-        ind=jbra[i]
+        ind =int(jbra[i])
         if (i != ind):
-            iconf[:,i]=iconf[:,ind]
-            tab[:,i]=tab[:,ind]
+            conf[i]=conf[ind]
+            tab[i]=tab[ind]
             diag[i]=diag[ind]
             bx[i]=bx[ind]
             el[i]=el[ind]
-    return iconf,tab,diag,bx,el
-=======
->>>>>>> 3b1bd75d1ad286b2a5e2ed59fdd9b51fb9193513
+    return conf,tab,diag,bx,el

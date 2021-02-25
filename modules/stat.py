@@ -2,7 +2,7 @@ import numpy as np
 import time
 from numba import jit
 
-def dmc_stat(bin_dim,bin0,pmax,filename):
+def dmc_stat(bin_dim,bin0,pmax,filename,xyes = True):
     t0 = time.time()
     f = open(filename,'r')
     data = f.readlines()
@@ -24,7 +24,8 @@ def dmc_stat(bin_dim,bin0,pmax,filename):
         for i in range(pmax):
             out.write('{}\t{}\t{}\t{}\t{}\n'.format(i+1,E[i],sE[i],x[i],sx[i]))
     print('Energy = {} +/- {}'.format(E[-1],sE[-1]))
-    print('Position = {} +/- {}'.format(x[-1],sx[-1]))
+    if xyes:
+        print('Position = {} +/- {}'.format(x[-1],sx[-1]))
     tfin = time.time()
     print('Total time = {} s'.format(tfin - t0))
     f.close()

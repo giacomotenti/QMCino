@@ -1,5 +1,5 @@
 import numpy as np
-from numba import jit ,njit
+from numba import jit ,njit , prange
 
 
 @njit(parallel=True)
@@ -20,7 +20,7 @@ def computetab(tab,conf,L):
             tab[i] =False # no move is possible
     el+=diag
     bx=Lambda-el
-    return bx/e0, tab, el, diag
+    return  tab, bx/e0, el, diag
 
 @jit(nopython=True)
 def update(conf,tab,iout,el,diag):
@@ -41,15 +41,15 @@ def update(conf,tab,iout,el,diag):
     ifor=np.mod(jout+1,L)
     if conf[ifor]!= conf[jout]:
         tab[jout] =True
-        el = el - 1
-        diag = diag - 0.5
+        el -= 1
+        diag -= 0.5
     else:
-        diag = diag + 0.5
+        diag += 0.5
         tab[jout] =False # no move is possible
         el+=1
     #el+=diag
-    #bx=Lambda-el
-    return   tab, el,diag
+    bx=Lambda-el
+    return   tab, bx / e0,  el,diag
 
 #example
 #L=4

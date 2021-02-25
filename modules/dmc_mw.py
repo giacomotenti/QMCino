@@ -40,7 +40,7 @@ def branching(x_w, w_w, nw):
     return x_out
 
 @njit(parallel=True)
-def propagate(alpha,t,t2,V,L,which,nbra,nit,nw,xxx,wwalker):
+def propagate(alpha,t,t2,V,L,which,nbra,nw,xxx,wwalker):
     el = np.zeros(nw)
     wwalker = np.zeros(nw)
     for w in prange(nw):
@@ -59,7 +59,7 @@ def run_mw(alpha,t,t2,V,L,which,nbra,nit,nw):
     f.write('# mean_posi \t mean_energy \t mean_weight \n' )
     print('running parallel mode')
     for ij in range(nit):
-        xxx , pos , energy ,weight = propagate(alpha,t,t2,V,L,which,nbra,nit,nw,xxx,wwalker)
+        xxx , pos , energy ,weight = propagate(alpha,t,t2,V,L,which,nbra,nw,xxx,wwalker)
         f.write('{:.16f} \t {:.16f} \t {} \n'.format(pos, energy, weight))
         if 10*(ij+1) % nit == 0:
             print('{}% completed'.format(100*(ij+ 1)//nit))
