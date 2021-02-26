@@ -49,10 +49,10 @@ def dmc_heis(L,nw,conf,tab,bx,el,diag,nsteps):
     wconf = np.ones(nw)
     Lambda = L / 4.0
 #parallelized loop on walkers
-    for w in prange(nw):
-        for i in range(nsteps):
+    for i in range(nsteps):
+        for w in prange(nw):
             #accumulate the weight
-            wconf*=bx[w]
+            wconf[w]*=bx[w]
             #random move
             r=np.random.rand()
             gn=np.zeros(L+1)

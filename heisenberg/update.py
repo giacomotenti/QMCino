@@ -2,14 +2,14 @@ import numpy as np
 from numba import jit ,njit , prange
 
 
-@njit(parallel=True)
+@njit(parallel=False)
 def computetab(tab,conf,L):
     Lambda = L / 4.0
     #lambda - ground state energy (see Bethe ansatz)
     e0 = Lambda+L* (np.log(2.0) - 0.25)
     diag = 0
     el = 0
-    for i in prange(L):
+    for i in range(L):
         j = np.mod(i+1, L)
         if conf[i]!= conf[j]:
             tab[i] =True
