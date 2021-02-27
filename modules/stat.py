@@ -1,8 +1,9 @@
 import numpy as np
 import time
 from numba import jit
+from matplotlib import pyplot as plt
 
-def dmc_stat(bin_dim,bin0,pmax,filename,xyes = True):
+def dmc_stat(L,bin_dim,bin0,pmax,filename,xyes = True):
     t0 = time.time()
     f = open(filename,'r')
     data = f.readlines()
@@ -29,6 +30,13 @@ def dmc_stat(bin_dim,bin0,pmax,filename,xyes = True):
     tfin = time.time()
     print('Total time = {} s'.format(tfin - t0))
     f.close()
+    plt.errorbar(np.arange(1,pmax+1,1),E,yerr=sE,marker='*',markersize=0.8,color='black')
+    if not xyes:
+        plt.plot(np.arange(1,pmax+1,1),-L*(np.log(2)-0.25)*np.ones(pmax),color = 'red')
+    plt.show()
+    if xyes:
+        plt.errorbar(np.arange(1,pmax+1,1),x,yerr=sx,marker='*',markersize=0.8,color='black')
+        plt.show()
 
 @jit(nopython=True)
 def stat_calc(data_array,bin_dim,bin0,p):

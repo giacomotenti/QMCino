@@ -174,9 +174,9 @@ def main(args):
                     bin0 = int(input('Initial bin for averages: ').strip(' '))
                     p = int(input('Projection length: ').strip(' '))
                     if model == 'heis':
-                        stat.dmc_stat(bindim,bin0,p,filename,xyes=False)
+                        stat.dmc_stat(L,bindim,bin0,p,filename,xyes=False)
                     else:
-                        stat.dmc_stat(bindim, bin0, p, filename)
+                        stat.dmc_stat(L,bindim, bin0, p, filename)
                 else:
                     print(filename + ' does not exist')
             else:
