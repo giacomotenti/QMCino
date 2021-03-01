@@ -1,0 +1,31 @@
+#!/bin/bash
+#SBATCH --nodes=2
+#SBATCH --ntasks-per-node=32
+#SBATCH --cpus-per-task=1
+##SBATCH --mem=180000
+#SBATCH --time=11:59:59
+#SBATCH --partition=regular2
+#SBATCH --job-name=dmc100000
+#SBATCH --mail-user=drigo96@live.it
+#SBATCH --mail-type=ALL
+
+#umask -S u=rwx,g=r,o=r
+
+
+# Define number of processors to send to mpirun for MPICH
+NNODES=2
+
+
+
+
+NPROCS=$((NNODES*32))
+cd ${SLURM_SUBMIT_DIR}
+echo $SLURM_SUBMIT_DIR
+
+
+echo "$(date)"
+export OMP_NUM_THREADS=2
+
+python3 ../qmcino.py<qmc.in
+echo " Done."
+

@@ -1,0 +1,39 @@
+/home/endrigo/QMCino/100.nw
+dom 28 feb 2021, 11.58.32, CET
+Welcome in
+   #####  ##   ##  #####        # #    #  ####
+  #     # # # # # #     #       # ##   # #    #
+  #     # #  #  # #             # # #  # #    #
+  #   # # #     # #        ###  # #  # # #    #
+  #    #  #     # #     #       # #   ## #    #
+   #### # #     #  #####        # #    #  #### 
+
+Type: 
+         -linear: switch to linear toy model; 
+         -echo_param: show parameters of the Hamiltonian; 
+         -set_param: set the parameters of the Hamiltonian; 
+         -dmc: calculate fn energy and observables
+         -read_dmc: post processing for dmc 
+         -quit (q): exit
+>>>Set new parameters for the Hamiltonian:
+Lattice dimension (number of spins) ?  L  = 100
+>>>Starting dmc calculation with fixed node approximation.
+Current parameters:
+ L  = 100
+Number of branchings? nbra? # of walkers? DMC algorithm on a 100 site 1d Heisenberg model
+Starting calculation with 100 walkers
+Branching each 5 steps.
+10% completed
+20% completed
+30% completed
+40% completed
+50% completed
+60% completed
+70% completed
+80% completed
+90% completed
+100% completed
+Data written in dmc_heis.dat
+Average survived walkers after branching = 0.88265
+Elapsed time = 20.526078701019287 s
+>>> Done.
