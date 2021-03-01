@@ -66,6 +66,7 @@ def readinput(file):
     inp['nbra'] = 10
     inp['nw'] = 100
     inp['model'] = 'linear'
+    inp['opt'] = 'parallel'
     with open(file,'r') as f:
         for x in f.readlines():
             xx = x.partition('#')[0]
@@ -174,9 +175,9 @@ def main(args):
                     bin0 = int(input('Initial bin for averages: ').strip(' '))
                     p = int(input('Projection length: ').strip(' '))
                     if model == 'heis':
-                        stat.dmc_stat(bindim,bin0,p,filename,xyes=False)
+                        stat.dmc_stat(L,bindim,bin0,p,filename,xyes=False)
                     else:
-                        stat.dmc_stat(bindim, bin0, p, filename)
+                        stat.dmc_stat(L,bindim, bin0, p, filename)
                 else:
                     print(filename + ' does not exist')
             else:
@@ -189,15 +190,10 @@ def main(args):
             echo_param()
             print('Starting ' + inparam[0] )
             if inparam[0].strip(' ') == 'dmc':
-                if inparam[1].strip(' ') == 'serial':
-                    print('Running serial algorithm')
-                    if inparam[4] == 1:
-                        dmc_sw.E_dmc(alpha,t,t2,V,L,which,inparam[2],1)
-                    else:
-                        dmc_mw.run_mw(alpha,t,t2,V,L,which,inparam[3],inparam[2],inparam[4],False)
-                if inparam[1].strip(' ') == 'parallel':
-                    print('Running parallel algorithm')
-                    dmc_mw.run_mw(alpha,t,t2,V,L,which,inparam[3],inparam[2],inparam[4],True)
+                if inparam[4] == 1:
+                    dmc_sw.E_dmc(alpha,t,t2,V,L,which,inparam[2],1)
+                else:
+                    dmc_mw.run_mw(alpha,t,t2,V,L,which,inparam[3],inparam[2],inparam[4])
             else:
                 print('Not a supported option!')
         else:
