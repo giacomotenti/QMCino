@@ -190,10 +190,13 @@ def main(args):
             echo_param()
             print('Starting ' + inparam[0] )
             if inparam[0].strip(' ') == 'dmc':
-                if inparam[4] == 1:
-                    dmc_sw.E_dmc(alpha,t,t2,V,L,which,inparam[2],1)
+                if model == 'heis':
+                    run_dmc_heis(L, inparam[2], inparam[3], inparam[4])
                 else:
-                    dmc_mw.run_mw(alpha,t,t2,V,L,which,inparam[3],inparam[2],inparam[4])
+                    if inparam[4] == 1:
+                        dmc_sw.E_dmc(alpha,t,t2,V,L,which,inparam[2],1)
+                    else:
+                        dmc_mw.run_mw(alpha,t,t2,V,L,which,inparam[3],inparam[2],inparam[4])
             else:
                 print('Not a supported option!')
         else:
