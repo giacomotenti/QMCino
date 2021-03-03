@@ -1,0 +1,183 @@
+u=rwx,g=r,o=r
+/marconi_scratch/userexternal/cmalosso/QMCino
+Welcome in
+   #####  ##   ##  #####        # #    #  ####
+  #     # # # # # #     #       # ##   # #    #
+  #     # #  #  # #             # # #  # #    #
+  #   # # #     # #        ###  # #  # # #    #
+  #    #  #     # #     #       # #   ## #    #
+   #### # #     #  #####        # #    #  #### 
+
+Type: 
+         -linear: switch to linear toy model; 
+         -echo_param: show parameters of the Hamiltonian; 
+         -set_param: set the parameters of the Hamiltonian; 
+         -dmc: calculate fn energy and observables
+         -read_dmc: post processing for dmc 
+         -quit (q): exit
+>>>Set new parameters for the Hamiltonian:
+Lattice dimension (number of spins) ?  L  = 50
+>>>Starting dmc calculation with fixed node approximation.
+Current parameters:
+ L  = 50
+Number of branchings? nbra? # of walkers? DMC algorithm on a 50 site 1d Heisenberg model
+Starting calculation with 100 walkers
+Branching each 5 steps.
+10% completed
+20% completed
+30% completed
+40% completed
+50% completed
+60% completed
+70% completed
+80% completed
+90% completed
+100% completed
+Data written in dmc_heis.dat
+Average survived walkers after branching = 0.83472
+Elapsed time = 16.364068269729614 s
+>>>Welcome in
+   #####  ##   ##  #####        # #    #  ####
+  #     # # # # # #     #       # ##   # #    #
+  #     # #  #  # #             # # #  # #    #
+  #   # # #     # #        ###  # #  # # #    #
+  #    #  #     # #     #       # #   ## #    #
+   #### # #     #  #####        # #    #  #### 
+
+Type: 
+         -linear: switch to linear toy model; 
+         -echo_param: show parameters of the Hamiltonian; 
+         -set_param: set the parameters of the Hamiltonian; 
+         -dmc: calculate fn energy and observables
+         -read_dmc: post processing for dmc 
+         -quit (q): exit
+>>>Set new parameters for the Hamiltonian:
+Lattice dimension (number of spins) ?  L  = 50
+>>>Starting dmc calculation with fixed node approximation.
+Current parameters:
+ L  = 50
+Number of branchings? nbra? # of walkers? DMC algorithm on a 50 site 1d Heisenberg model
+Starting calculation with 1000 walkers
+Branching each 5 steps.
+10% completed
+20% completed
+30% completed
+40% completed
+50% completed
+60% completed
+70% completed
+80% completed
+90% completed
+100% completed
+Data written in dmc_heis.dat
+Average survived walkers after branching = 0.83112
+Elapsed time = 23.800984382629395 s
+>>>Welcome in
+   #####  ##   ##  #####        # #    #  ####
+  #     # # # # # #     #       # ##   # #    #
+  #     # #  #  # #             # # #  # #    #
+  #   # # #     # #        ###  # #  # # #    #
+  #    #  #     # #     #       # #   ## #    #
+   #### # #     #  #####        # #    #  #### 
+
+Type: 
+         -linear: switch to linear toy model; 
+         -echo_param: show parameters of the Hamiltonian; 
+         -set_param: set the parameters of the Hamiltonian; 
+         -dmc: calculate fn energy and observables
+         -read_dmc: post processing for dmc 
+         -quit (q): exit
+>>>Set new parameters for the Hamiltonian:
+Lattice dimension (number of spins) ?  L  = 50
+>>>Starting dmc calculation with fixed node approximation.
+Current parameters:
+ L  = 50
+Number of branchings? nbra? # of walkers? DMC algorithm on a 50 site 1d Heisenberg model
+Starting calculation with 10000 walkers
+Branching each 5 steps.
+10% completed
+20% completed
+30% completed
+40% completed
+50% completed
+60% completed
+70% completed
+80% completed
+90% completed
+100% completed
+Data written in dmc_heis.dat
+Average survived walkers after branching = 0.83009
+Elapsed time = 80.61744713783264 s
+>>>Welcome in
+   #####  ##   ##  #####        # #    #  ####
+  #     # # # # # #     #       # ##   # #    #
+  #     # #  #  # #             # # #  # #    #
+  #   # # #     # #        ###  # #  # # #    #
+  #    #  #     # #     #       # #   ## #    #
+   #### # #     #  #####        # #    #  #### 
+
+Type: 
+         -linear: switch to linear toy model; 
+         -echo_param: show parameters of the Hamiltonian; 
+         -set_param: set the parameters of the Hamiltonian; 
+         -dmc: calculate fn energy and observables
+         -read_dmc: post processing for dmc 
+         -quit (q): exit
+>>>Set new parameters for the Hamiltonian:
+Lattice dimension (number of spins) ?  L  = 50
+>>>Starting dmc calculation with fixed node approximation.
+Current parameters:
+ L  = 50
+Number of branchings? nbra? # of walkers? DMC algorithm on a 50 site 1d Heisenberg model
+Starting calculation with 100000 walkers
+Branching each 5 steps.
+10% completed
+20% completed
+30% completed
+40% completed
+50% completed
+60% completed
+70% completed
+80% completed
+90% completed
+100% completed
+Data written in dmc_heis.dat
+Average survived walkers after branching = 0.83002
+Elapsed time = 685.5452692508698 s
+>>>Welcome in
+   #####  ##   ##  #####        # #    #  ####
+  #     # # # # # #     #       # ##   # #    #
+  #     # #  #  # #             # # #  # #    #
+  #   # # #     # #        ###  # #  # # #    #
+  #    #  #     # #     #       # #   ## #    #
+   #### # #     #  #####        # #    #  #### 
+
+Type: 
+         -linear: switch to linear toy model; 
+         -echo_param: show parameters of the Hamiltonian; 
+         -set_param: set the parameters of the Hamiltonian; 
+         -dmc: calculate fn energy and observables
+         -read_dmc: post processing for dmc 
+         -quit (q): exit
+>>>Set new parameters for the Hamiltonian:
+Lattice dimension (number of spins) ?  L  = 50
+>>>Starting dmc calculation with fixed node approximation.
+Current parameters:
+ L  = 50
+Number of branchings? nbra? # of walkers? DMC algorithm on a 50 site 1d Heisenberg model
+Starting calculation with 1000000 walkers
+Branching each 5 steps.
+10% completed
+20% completed
+30% completed
+40% completed
+50% completed
+60% completed
+70% completed
+80% completed
+90% completed
+100% completed
+Data written in dmc_heis.dat
+Average survived walkers after branching = 0.82999
+Elapsed time = 6854.148682832718 s
+>>>
