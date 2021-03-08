@@ -1,0 +1,7 @@
+      set_param
+      10
+      dmc
+      10000
+      5
+      5000
+      quit
