@@ -45,7 +45,7 @@ def upjbra(nw,jbra,histw): #here I permute the walkers in a way that I can use r
     #histw=np.zeros(nw)
     killw=np.zeros(nw) #I store the killed walkers here
 
-    #for i in range(nw): #Sorella nel suo codice lo calcola di nuovo, ma possiamo usare quello calcolato nel branching
+    #for i in range(nw): #non c'è bisogno di calcolarlo di nuovo, possiamo usare quello calcolato nel branching
     #    histw[int(jbra[i])]+=1
 
     posk=0 #number of killed walkers
